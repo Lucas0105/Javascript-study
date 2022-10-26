@@ -14,6 +14,13 @@
 - [this](#this)
 
 
+# 비동기 처리
+- [동기와 비동기](#동기와-비동기)
+- [JS의 비동기처리](#js의-비동기처리)
+- [Axios](#axios)
+- [CallBack과 Promise](#callback과-promise)
+- [Ajax](#ajax)
+
 ## 선언식과 표현식
 - 선언식(호이스팅)
 ```
@@ -360,6 +367,17 @@ btn.addEventListener('click', function(event) {
   console.log(this)   # window
 })
 ```
+
+
+## 동기와 비동기
+### 동기
+- 순서대로 처리
+
+### 비동기
+- 결과를 기다리지 않고 다음 작업을 처리
+
+
+## JS의 비동기처리
 
 
 ## 기타
