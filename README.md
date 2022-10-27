@@ -16,10 +16,8 @@
 
 # 비동기 처리
 - [동기와 비동기](#동기와-비동기)
-- [JS의 비동기처리](#js의-비동기처리)
 - [Axios](#axios)
-- [CallBack과 Promise](#callback과-promise)
-- [Ajax](#ajax)
+- [Promise](#promise)
 
 ## 선언식과 표현식
 - 선언식(호이스팅)
@@ -374,22 +372,103 @@ btn.addEventListener('click', function(event) {
 - 순서대로 처리
 
 ### 비동기
-- 결과를 기다리지 않고 다음 작업을 처리
+- 결과를 기다리지 않고 다음 작업을 처리, 작업이 완료되는 순서에 따라 처리
+
+## Axios
+
+### 공식 문서
+- https://axios-http.com/kr/docs/intro
+- https://github.com/axios/axios
+
+### 기본 구조
+```
+axios.get(URL)
+  .then((response) => {
+    ...
+    return nextResponse
+  })
+  .then((nextResponse) => {
+    ...
+  })
+  .catch((error) => {
+    ...
+  })
+```
+
+- 권장하는 구조
+```
+axios({
+  method:'get',
+  url:'',
+})
+```
+
+### 콜백함수
+- 다른 함수의 인자로 전달되는 함수
 
 
-## JS의 비동기처리
+## Promise
+- 비동기 작업의 완료 또는 실패를 나타내는 객체
 
+### AJAX의 특징
+- 페이지 새로고침 없이 서버에 요청
+
+### then
+- 이전 작업의 성공 결과를 인자로 전달 받음
+
+### catch
+- then이 하나라도 실패하면 callback 실행
+
+### chaining
+- axios로 처리한 비동기 로직이 항상 promise 객체를 반환하기 때문에 then으로 계속 이어 나갈 수 있음
+```
+axios.get('url')
+  .then((response) => {
+    return next1Response  // 리턴을 해야 다음 then으로 리턴 값을 넘길 수 있음
+  })
+  .then((next1Response) => {
+    return next2Response
+  })
+```
+
+### csrf 토큰 값 axios에 붙이는 방법
+```
+{% csrf_token %}
+<script>
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+</script>
+
+axios({
+  method:'post',
+  url:'url',
+  headers: {'X-CSRFToken': csrftoken},
+})
+```
+- 참조 사이트: https://docs.djangoproject.com/en/4.1/howto/csrf/
 
 ## 기타
-- HTML파일에서 실행하는 방법
+### HTML파일에서 실행하는 방법
 ```
 <script>
   console.log('hello, javascript')
 </script>
 ```
 
-- js파일에 작성하고 HTML에 적용하는 방법
+### js파일에 작성하고 HTML에 적용하는 방법
 
 ```
 <script type='text/javascript' scr='hello.js'></script>
 ```
+
+### 사용자 지정 데이터 만드는 방법
+- data-* attributes
+- html에 있는 데이터 script로 넘기기
+```
+<div data-my-id="my-data"></div>
+
+<script>
+  const myId = event.target.dataset.myId
+</script>
+```
+- 참조 사이트 : https://developer.mozilla.org/ko/docs/Web/HTML/Global_attributes/data-*
+- 주의사항 : 세미콜론을 포함하면 안됨, 대문자를 포함하면 안됨
